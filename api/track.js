@@ -12,8 +12,8 @@ export default async function handler(req, res) {
         // ============================================
         // 🔻 IMPORTANT: YAHAN APNA BOT TOKEN LAGAYEIN 🔻
         // ============================================
-        const BOT_TOKEN = "7754677986:AAGjnglM6d3RoTCDrbKHfXD_VazEZOQpfkA";     // @BotFather se milega
-        const CHAT_ID = "4530245203612";         // @userinfobot se milega
+        const BOT_TOKEN = "7991147017:AAF9FiwcMrOjTEuP5puYZ0RlYOWU7M73UaI";     // @BotFather se milega
+        const CHAT_ID = "5975952682";         // @userinfobot se milega
         // ============================================
         
         // Vercel automatically provides these headers [citation:3][citation:7][citation:8]
