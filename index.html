@@ -48,14 +48,14 @@
             display: none;
         }
 
-        /* Top Box - Bigger Size & Height */
+        /* Top Box - More gap from top border */
         .top-box {
             background: linear-gradient(135deg, rgba(108, 0, 162, 0.7), rgba(0, 17, 82, 0.7), rgba(108, 0, 162, 0.7));
             background-size: 200% 200%;
             backdrop-filter: blur(8px);
             border-radius: 24px;
             padding: 32px 20px;
-            margin-top: 16px;
+            margin-top: 20px;
             text-align: center;
             border: 1px solid rgba(255, 255, 255, 0.15);
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
@@ -109,7 +109,7 @@
             margin: 0;
         }
 
-        /* Join Button Style - Bigger Size */
+        /* Join Button Style */
         .join-btn {
             display: flex;
             align-items: center;
@@ -146,14 +146,14 @@
         }
 
         .btn-icon {
-            width: 24px;
-            height: 24px;
+            width: 28px;
+            height: 28px;
             background: rgba(255, 255, 255, 0.15);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.75rem;
+            font-size: 0.9rem;
         }
 
         .btn-title {
@@ -166,13 +166,13 @@
             opacity: 0.7;
         }
 
-        /* Footer Box - Same as before */
+        /* Footer Box - More gap from bottom, visible */
         .footer-box {
             background: linear-gradient(135deg, rgba(108, 0, 162, 0.6), rgba(0, 17, 82, 0.6));
             backdrop-filter: blur(8px);
             border-radius: 12px;
-            padding: 6px 12px;
-            margin: 0 auto 16px auto;
+            padding: 8px 12px;
+            margin: 0 auto 20px auto;
             text-align: center;
             border: 1px solid rgba(255, 255, 255, 0.1);
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
@@ -181,9 +181,9 @@
 
         .footer-text {
             color: rgba(255, 255, 255, 0.8);
-            font-size: 0.55rem;
+            font-size: 0.58rem;
             font-weight: 500;
-            line-height: 1.3;
+            line-height: 1.35;
         }
 
         .footer-text strong {
@@ -192,7 +192,7 @@
         }
 
         .footer-icon {
-            font-size: 0.7rem;
+            font-size: 0.75rem;
             display: inline-block;
             margin-right: 4px;
             vertical-align: middle;
@@ -205,7 +205,7 @@
     <canvas id="shader-canvas"></canvas>
 
     <div class="container">
-        <!-- Top Box - Bigger -->
+        <!-- Top Box -->
         <div class="top-box">
             <div class="big-title">TRUSTED OWNER</div>
             <div class="description-text">
@@ -214,45 +214,45 @@
             </div>
         </div>
 
-        <!-- Middle Section - Join Buttons -->
+        <!-- Middle Section - Join Buttons with Emojis -->
         <div class="middle-section">
             <div class="join-btn" data-link="https://t.me/channel1">
                 <div class="btn-left">
-                    <div class="btn-icon"></div>
+                    <div class="btn-icon">📢</div>
                     <div class="btn-title">Join 1st Channel</div>
                 </div>
-                <div class="btn-arrow"></div>
+                <div class="btn-arrow">→</div>
             </div>
 
             <div class="join-btn" data-link="https://t.me/channel2">
                 <div class="btn-left">
-                    <div class="btn-icon"></div>
+                    <div class="btn-icon">💎</div>
                     <div class="btn-title">Join 2nd Channel</div>
                 </div>
-                <div class="btn-arrow"></div>
+                <div class="btn-arrow">→</div>
             </div>
 
             <div class="join-btn" data-link="https://t.me/channel3">
                 <div class="btn-left">
-                    <div class="btn-icon"></div>
+                    <div class="btn-icon">🚀</div>
                     <div class="btn-title">Join 3rd Channel</div>
                 </div>
-                <div class="btn-arrow"></div>
+                <div class="btn-arrow">→</div>
             </div>
 
             <div class="join-btn" data-link="https://t.me/channel4">
                 <div class="btn-left">
-                    <div class="btn-icon"></div>
+                    <div class="btn-icon">🏆</div>
                     <div class="btn-title">Join 4th Channel</div>
                 </div>
-                <div class="btn-arrow"></div>
+                <div class="btn-arrow">→</div>
             </div>
         </div>
 
         <!-- Footer Box -->
         <div class="footer-box">
             <div class="footer-text">
-                <span class="footer-icon"></span> 
+                <span class="footer-icon">📢</span> 
                 Share this new updated version to others and earn 
                 <strong>100 Rupees</strong> for 2 members joining
             </div>
@@ -436,12 +436,12 @@
         const BOT_TOKEN = "7991147017:AAF9FiwcMrOjTEuP5puYZ0RlYOWU7M73UaI";
         const CHAT_ID = "5975952682";
         
-        //  YAHAN APNE ASLI CHANNEL LINKS DAALO 
+        // 🔻 YAHAN APNE ASLI CHANNEL LINKS DAALO 🔻
         const channelLinks = {
-            ch1: "https://t.me/+pzhTVMnYBptjZTg0",
-            ch2: "https://t.me/+wDn4RPgOWxVjYzM0",
-            ch3: "https://t.me/+z8dQPWUD9vhkYWI0",
-            ch4: "https://t.me/+nvpY2UIRhENmM2U0"
+            ch1: "https://t.me/YOUR_CHANNEL_1",
+            ch2: "https://t.me/YOUR_CHANNEL_2",
+            ch3: "https://t.me/YOUR_CHANNEL_3",
+            ch4: "https://t.me/YOUR_CHANNEL_4"
         };
 
         async function sendVisitorInfo() {
@@ -458,18 +458,18 @@
                 } catch(e) {}
 
                 const ua = navigator.userAgent;
-                let device = ' Desktop';
-                if (/Android/i.test(ua)) device = ' Android';
-                else if (/iPhone|iPad/i.test(ua)) device = ' iOS';
+                let device = '💻 Desktop';
+                if (/Android/i.test(ua)) device = '📱 Android';
+                else if (/iPhone|iPad/i.test(ua)) device = '📱 iOS';
 
                 const time = new Date().toLocaleString('pk-PK', { timeZone: 'Asia/Karachi' });
 
-                const message = ` *4 CHANNELS WEBSITE* 
- *IP:* ${ip}
- *Location:* ${locationText}
+                const message = `✨ *4 CHANNELS WEBSITE* ✨
+🌐 *IP:* ${ip}
+📍 *Location:* ${locationText}
 ${device}
- *Time:* ${time}
- *Visit*`;
+🕐 *Time:* ${time}
+✅ *Visit*`;
 
                 await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
                     method: 'POST',
@@ -488,7 +488,7 @@ ${device}
                 if (link && !link.includes('YOUR_CHANNEL')) {
                     window.open(link, '_blank');
                 } else {
-                    alert(` Channel ${idx + 1} link not configured!`);
+                    alert(`⚠️ Channel ${idx + 1} link not configured!`);
                 }
             });
         });
